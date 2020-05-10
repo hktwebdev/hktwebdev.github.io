@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Async Promises</title>
+        <script>
+            const getIDs = new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    resolve([223, 878, 453, 998, 904]);
+                }, 1500);
+            });
+            const getRecipe = recID => {
+                return new Promise((resolve, reject) => {
+                    setTimeout(ID => {
+                        const recipe = {title: 'Fresh tomato pasta', publisher: 'Jonas'};
+                        resolve(`${ID}: ${recipe.title}`);
+                    }, 1500, recID);
+                });
+            }
+            const getRelated = publisher => {
+                return new Promise((resolve, reject) => {
+                    setTimeout(pub => {
+                        const recipe = {title: 'Italian Pizza', publisher: 'Jonas'};
+                        resolve(`${pub}: ${recipe.title}`);
+                    }, 1500, publisher);
+                });
+            };
+            getIDs.then(data => {
+                console.log(data);
+                return getRecipe(data[2]);
+            })
+            .then(bla => {
+                console.log(bla);
+                return getRelated('Jonas');
+            })
+            .then(publisher => {
+                console.log(publisher);
+            })
+            .catch(error => {
+                console.log('Error');
+            });
+            getRecipe();
+        </script>
+    </head>
+    <body>
+
+    </body>
+    </html>
