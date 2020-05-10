@@ -1,35 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <title>ES6</title>
-
     <script>
-
     </script>
-
     <style type="text/css">
-        pre {
-            font-size: 18px;
-            color: blue;
-        }
-
-        body,
-        h2,
-        h4 {
-            color: #948f8f;
-        }
-
-        body {
-            color: #555;
-            margin: 20px;
-            border: solid 1px #dedede;
-            padding: 20px;
-        }
-        pre span.highligh{
-            color: #006500;
-            font-weight: bold;
-        }
+        pre { font-size: 18px; color: blue; }
+        p{ font-size: 18px;}
+        body, h2, h4 { color: #948f8f; }
+        h2{ border-bottom: solid 1px #f3f3f3; padding-bottom: 4px; }
+        body { color: #555; margin: 20px; border: solid 1px #dedede; padding: 20px; font-family: Arial, Helvetica, sans-serif; }
+        pre span.highligh{ color: #006500; font-weight: bold; }
     </style>
 </head>
 
@@ -518,6 +499,68 @@ const johnAthlete6 = new Athlete6('John', 1990, 'swimmer', 3, 10);
 johnAthlete6.wonMedal();
 johnAthlete6.calculateAge();
 </pre>
+
+<h2>11. Async Promises </h2>
+<pre> 
+const getIDs = new Promise((resolve, reject) => {  <span class="highligh"> ---->  resolve is result, reject is error </span>
+    setTimeout(() => {
+        resolve([223, 878, 453, 998, 904]);  <span class="highligh"> ---->  resolve gives result from response </span>
+    }, 1500);
+});
+const getRecipe = recID => {
+    return new Promise((resolve, reject) => {
+        setTimeout(ID => {
+            const recipe = {title: 'Fresh tomato pasta', publisher: 'Jonas'};
+            resolve(`${ID}: ${recipe.title}`);
+        }, 1500, recID);
+    });
+}
+const getRelated = publisher => {
+    return new Promise((resolve, reject) => {
+        setTimeout(pub => {
+            const recipe = {title: 'Italian Pizza', publisher: 'Jonas'};
+            resolve(`${pub}: ${recipe.title}`);
+        }, 1500, publisher);
+    });
+};
+
+getIDs.then(data => {  <span class="highligh"> ---->  'then' returns success with response </span>
+    console.log(data); <span class="highligh"> ---->  'data' here is nothing but, response data </span>
+    return getRecipe(data[2]);
+})
+.then(bla => {
+    console.log(bla);
+    return getRelated('Jonas');
+})
+.then(publisher => {
+    console.log(publisher);
+})
+.catch(error => {     <span class="highligh"> ---->  'catch' returns errors </span>
+    console.log('Error');
+});
+
+getRecipe();
+</pre>
+<h2>11.1. Async Await </h2>
+<pre>
+async function getRecipesAW() {  <span class="highligh"> ---->  'async' runs in background </span>
+    const IDs = await getIDs;    <span class="highligh"> ---->  'await' returns results from Promise </span>
+    console.log(IDs);
+    const recipe = await getRecipe(IDs[2]);
+    console.log(recipe);
+    const related = await getRelated('Jonas Schmedtmann');
+    console.log(related);
+
+    return recipe;             <span class="highligh"> ---->  'return' returns perticular result from promise, can be used separately </span>
+    }
+    getRecipesAW().then(result => console.log(`${result} is the best ever!`)); <span class="highligh"> ---->  'result' is, the result of return from getRecipesAW function</span>
+</pre>
+
+<h2>12. AJAX and API </h2>
+<h3>AJAX</h3>
+<p>AJAX stands for Asyncronus Javascript And XML, which is used to send HTTP request for receiving and sending data from server</p>
+<h3>API</h3>
+<p>API stands for Application Programming Interface, which is part of server, which receives requests and send responses</p>
 
 </body>
 
