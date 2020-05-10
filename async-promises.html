@@ -3,6 +3,14 @@
     <head>
         <meta charset="UTF-8">
         <title>Async Promises</title>
+        <style type="text/css">
+            pre { font-size: 18px; color: blue; }
+            p{ font-size: 18px;}
+            body, h2, h4 { color: #948f8f; }
+            h2{ border-bottom: solid 1px #f3f3f3; padding-bottom: 4px; }
+            body { color: #555; margin: 20px; border: solid 1px #dedede; padding: 20px; font-family: Arial, Helvetica, sans-serif; }
+            pre span.highligh{ color: #006500; font-weight: bold; }
+        </style>
         <script>
             const getIDs = new Promise((resolve, reject) => {
                 setTimeout(() => {
@@ -43,6 +51,49 @@
         </script>
     </head>
     <body>
-
+        <h2>Async</h2>
+        <pre>
+            const getIDs = new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    resolve([223, 878, 453, 998, 904]);
+                }, 1500);
+            });
+            const getRecipe = recID => {
+                return new Promise((resolve, reject) => {
+                    setTimeout(ID => {
+                        const recipe = {title: 'Fresh tomato pasta', publisher: 'Jonas'};
+                        resolve(`${ID}: ${recipe.title}`);
+                    }, 1500, recID);
+                });
+            }
+            const getRelated = publisher => {
+                return new Promise((resolve, reject) => {
+                    setTimeout(pub => {
+                        const recipe = {title: 'Italian Pizza', publisher: 'Jonas'};
+                        resolve(`${pub}: ${recipe.title}`);
+                    }, 1500, publisher);
+                });
+            };
+            getIDs.then(data => {
+                console.log(data);
+                return getRecipe(data[2]);
+            })
+            .then(bla => {
+                console.log(bla);
+                return getRelated('Jonas');
+            })
+            .then(publisher => {
+                console.log(publisher);
+            })
+            .catch(error => {
+                console.log('Error');
+            });
+            getRecipe();
+        </pre>
+        <p>Output console</p>
+        <pre>
+            453: Fresh tomato pasta
+            async-promises.html:37 Jonas: Italian Pizza
+        </pre>
     </body>
     </html>
